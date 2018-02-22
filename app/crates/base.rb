@@ -9,7 +9,7 @@ module Crates
         def initialize opts={}
             @width = opts[:width]
             @height = opts[:height]
-            @canvas = $$[:document].getElementById "panel"
+            @canvas = $$[:document].getElementById("panel").getContext("2d")
         end
     end
 end

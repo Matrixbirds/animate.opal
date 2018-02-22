@@ -11,22 +11,30 @@ module Crates
     end
 
     def render opts={}
-        $$.console.log "opts", *opts
         ctx.beginPath
-        ctx.send opts[:call].to_sym, *opts[:args]
+        case opts[:call]
+        when 'rect'
+            ctx.rect *opts[:args]
+        when 'arc'
+            ctx.arc *opts[:args]
+        end
         ctx.fillStyle = opts[:fill_style]
         ctx.fill
         ctx.closePath
     end
 
-    def method_missing(name, *args, &block)
-        opts = args[0]
-        opts_0 = args[1]
+    def method_missing(name, opts={}, &block)
         case name
         when "render_rect"
-            render call: "rect", rect: opts[:rect], fill_style: opts[:fill_style]
+            render({:call => "rect"}.merge({
+                :args => opts[:args],
+                :fill_style => opts[:fill_style]
+            }))
         when "render_arc"
-            render call: "arc", rect: opts[:rect], fill_style: opts[:rect]
+            render({:call => "arc"}.merge({
+                :args => opts[:args],
+                :fill_style => opts[:fill_style]
+            }))
         else
             raise NoMethodError
         end
