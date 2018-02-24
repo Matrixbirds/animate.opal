@@ -5,8 +5,9 @@ require 'crates'
 
 include Crates
 
-crates = Base.new width: 480, height: 320
+WIDTH = 480
+HEIGHT = 320
 
-setup ctx: crates.canvas
+crates = Panel.new
 
-render_rect args: [20, 40, 50, 50], fill_style: "#FF9999"
+crates.render_arc args: [40, 50, 10, 0, $$.Math.PI * 2], fill_style: "#0095DD"
